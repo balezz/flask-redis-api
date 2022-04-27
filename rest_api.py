@@ -21,7 +21,7 @@ def launch_task(sepal_length, sepal_width, petal_length, petal_width, api):
     logging.info('sepal_length, sepal_width, petal_length, petal_width, api')
     if api == 'v1.0':
         prediction = get_pred(sepal_length, sepal_width, petal_length, petal_width)
-        iris_name = IRIS[prediction]
+        iris_name = IRIS[int(prediction)]
         res_dict = {'result': iris_name}
         logging.info(res_dict)
     else:
@@ -54,7 +54,7 @@ def get_pred(sepal_length, sepal_width, petal_length, petal_width):
     time.sleep(4)
     w = np.random.randn(5, 3)
     x = np.array([float(sepal_length), float(sepal_width), float(petal_length), float(petal_width), 1])
-    return np.argmax(x @ w)
+    return np.argmax(x.dot(w))
 
 
 def get_process_response(code, process_status, status=200):
