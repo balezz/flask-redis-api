@@ -5,6 +5,8 @@ services:
     build: .
     image: iris:1.0
     container_name: iris
+    environment:
+      - REDIS_HOST=redis
     ports:
       - 5000:5000
     extra_hosts:

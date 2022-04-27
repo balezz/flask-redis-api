@@ -1,6 +1,7 @@
 #!/bin/bash
 
 run_rq() {
+  service redis-server start 2>&1 | tee -a &
   rq worker rest_api -u 'redis://app-redis:6379' 2>&1 | tee -a &
 }
 

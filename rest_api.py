@@ -1,6 +1,6 @@
 import copy
 import time
-
+import os
 from flask import Flask, jsonify, abort, make_response, request
 from rq import Queue, get_current_job
 from redis import Redis
@@ -9,7 +9,7 @@ import numpy as np
 
 IRIS = ('setosa', 'versicolor', 'virginica')
 
-redis_conn = Redis(host='localhost', port=6379)
+redis_conn = Redis(host='app-redis', port=6379)
 queue = Queue('rest_api', connection=redis_conn, default_timeout=1200)
 
 logging.basicConfig(filename='logs/logs.log', level=logging.DEBUG)
@@ -67,7 +67,7 @@ def status(job_id):
     if job is None:
         return get_process_response('NOT_FOUND', 'error', 404)
     if job.is_failed:
-        return get_process_response('INTERNAL SERVER ERROR', 'error', 500)
+        return get_process_response('INTERNAL SERVER ERROR MOTHERFUCKER', 'error', 500)
     if job.is_finished:
         iris_name = copy.deepcopy(job.result)['result']
         result = {'result': iris_name}
@@ -82,7 +82,7 @@ def not_found(error):
 
 @app.errorhandler(500)
 def server_error(error):
-    return make_response(jsonify({'code': 'INTERNAL_SERVER_ERROR'}), 500)
+    return make_response(jsonify({'code': 'INTERNAL_SERVER_ERROR MOTHERFUCKER'}), 500)
 
 
 if __name__ == '__main__':
